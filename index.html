@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kyzel Personal Portfolio</title>
+  <style>
+/* ================= RESET ================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+/* ================= BODY ================= */
+body {
+  background: #000;
+  color: #b6ffb6;
+  line-height: 1.6;
+}
+/* ================= ANIMATED BACKGROUND ================= */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: -2;
+  background: linear-gradient(120deg, #00ff88 0%, #003d1f 100%);
+  opacity: 0.12;
+  animation: bgmove 12s ease-in-out infinite alternate;
+}
+
+@keyframes bgmove {
+  0% { filter: hue-rotate(0deg) blur(0px); }
+  100% { filter: hue-rotate(60deg) blur(2px); }
+}
+
+/* ================= GLASS NAVBAR ================= */
+nav {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 32px #00ff8855;
+}
+
+/* ================= SOCIAL SIDEBAR ================= */
+.social-sidebar {
+  position: fixed;
+  top: 50%;
+  left: 18px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  z-index: 200;
+}
+.social-sidebar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 50%;
+  border: 1.5px solid #00ff88;
+  color: #00ff88;
+  font-size: 22px;
+  transition: background 0.3s, color 0.3s, box-shadow 0.3s;
+  box-shadow: 0 0 12px #00ff8855;
+  text-decoration: none;
+}
+.social-sidebar a:hover {
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 32px #00ff88;
+}
+
+/* ================= CARD HOVER ENHANCEMENT ================= */
+.project-card, .info-card {
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.project-card:hover, .info-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 0 48px #00ff88;
+}
+
+/* ================= BUTTON ENHANCEMENT ================= */
+.primary-btn {
+  letter-spacing: 1px;
+  font-weight: 600;
+  box-shadow: 0 0 18px #00ff88;
+}
+.primary-btn:active {
+  transform: scale(0.97);
+}
+
+/* ================= SECTION FADE-IN ANIMATION ================= */
+.section {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s cubic-bezier(.4,0,.2,1), transform 0.8s cubic-bezier(.4,0,.2,1);
+}
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .social-sidebar { display: none; }
+}
+
+/* ================= NAVBAR ================= */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.95);
+  padding: 18px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #00ff88;
+  box-shadow: 0 0 12px #00ff88;
+}
+
+.logo {
+  color: #00ff88;
+  font-size: 22px;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 22px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #b6ffb6;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+nav a:hover {
+  color: #00ff88;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+/* ================= HERO ================= */
+.hero {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, #003d1f, #000);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.hero h1 {
+  margin-top: 18px;
+  font-size: 34px;
+  text-shadow: 0 0 15px #00ff88;
+}
+
+.hero p {
+  margin-top: 10px;
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.hero span {
+  color: #00ff88;
+}
+
+/* ================= PROFILE IMAGE ================= */
+.profile-container {
+  margin-bottom: 15px;
+}
+
+.profile-img {
+  width: 155px;
+  height: 155px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #00ff88;
+  animation: glow 2.5s ease-in-out infinite alternate;
+}
+
+/* Floating effect */
+.floating {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-18px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 0 18px rgba(0,255,136,0.5);
+  }
+  to {
+    box-shadow: 0 0 40px rgba(0,255,136,1);
+  }
+}
+
+/* ================= BUTTON ================= */
+.primary-btn {
+  margin-top: 25px;
+  padding: 13px 34px;
+  background: transparent;
+  border: 2px solid #00ff88;
+  color: #00ff88;
+  border-radius: 35px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 12px #00ff88;
+}
+
+.primary-btn:hover {
+  background: #00ff88;
+  color: #000;
+  box-shadow: 0 0 35px #00ff88;
+  transform: translateY(-2px);
+}
+
+/* ================= SECTIONS ================= */
+section {
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.section {
+  opacity: 0;
+  transform: translateY(35px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.section.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+section h2 {
+  color: #00ff88;
+  margin-bottom: 28px;
+  font-size: 26px;
+  text-shadow: 0 0 10px #00ff88;
+}
+
+/* ================= INFO CARD ================= */
+
+/* ===== Enhanced Glassmorphism Card Design ===== */
+.info-card, .project-card {
+  max-width: 520px;
+  margin: auto;
+  padding: 25px;
+  background: rgba(10, 30, 20, 0.55);
+  border-radius: 18px;
+  border: 1.5px solid #00ff88;
+  box-shadow: 0 8px 32px 0 rgba(0,255,136,0.18), 0 1.5px 8px 0 #00ff8840;
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.info-card::before, .project-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(120deg, rgba(0,255,136,0.08) 0%, rgba(0,61,31,0.12) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.info-card p, .project-card p {
+  margin: 10px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.info-card:hover, .project-card:hover {
+  box-shadow: 0 0 60px #00ff88, 0 8px 32px 0 rgba(0,255,136,0.25);
+  border-color: #b6ffb6;
+}
+
+/* ================= SKILLS ================= */
+.skills-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.skill {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: 1px solid #00ff88;
+  color: #00ff88;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+  box-shadow: 0 0 12px rgba(0,255,136,0.4);
+}
+
+.skill:hover {
+  background: #00ff88;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 0 28px #00ff88;
+}
+
+/* ================= PROJECTS ================= */
+.projects-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 28px;
+}
+
+
+.project-card {
+  width: 280px;
+}
+
+.project-card h3 {
+  margin-bottom: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.project-tech {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+  color: #00ff88;
+  text-shadow: 0 0 8px #00ff88;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  background: #000;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #00ff88;
+  box-shadow: 0 0 18px #00ff88;
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+  }
+
+  .project-card {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- Social Sidebar -->
+  <div class="social-sidebar">
+    <a href="mailto:ronylbns@email.com" title="Email"><span>📧</span></a>
+    <a href="https://github.com/ronyl" target="_blank" title="GitHub"><span>🐙</span></a>
+    <a href="https://linkedin.com/in/ronyl" target="_blank" title="LinkedIn"><span>💼</span></a>
+  </div>
+
+  <!-- Navbar -->
+  <nav>
+    <h2 class="logo">Personal Portfolio</h2>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#personal">Personal</a></li>
+      <li><a href="#career">Career</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero section">
+    <div class="profile-container floating">
+      <img src="Kyzel.jpg" alt="Profile Photo" class="profile-img">
+    </div>
+
+    <h1>Hi, I'm <span>Kyzel Aleviado</span></h1>
+    <p>Web Developer • Designer • Student</p>
+
+    <button class="primary-btn" onclick="scrollToSection('projects')">
+      View My Work
+    </button>
+  </section>
+
+  <!-- Personal Information -->
+  <section id="personal" class="section">
+    <h2>👤 Personal Information</h2>
+
+    <div class="info-card">
+      <p><strong>Name:</strong> Kyzel Aleviado</p>
+      <p><strong>Course:</strong> BSIT</p>
+      <p><strong>Year:</strong> 3rd Year</p>
+    </div>
+  </section>
+
+  <!-- Career Objective -->
+  <section id="career" class="section">
+    <h2>🎯 Career Objective</h2>
+
+    <div class="info-card">
+      <p>
+        To become a skilled web developer by applying my technical knowledge,
+        continuously learning new technologies, and contributing to meaningful
+        and innovative projects.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="section">
+    <h2>🛠 Skills</h2>
+
+    <div class="skills-container">
+      <span class="skill">HTML</span>
+      <span class="skill">CSS</span>
+      <span class="skill">JavaScript</span>
+      <span class="skill">Java</span>
+      <span class="skill">Git & GitHub</span>
+      <span class="skill">Responsive Web Design</span>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects" class="section">
+    <h2>🚀 Projects</h2>
+
+    <div class="projects-container">
+
+      <div class="project-card">
+        <h3>Portfolio Website</h3>
+        <p>
+          A personal portfolio website with animations, glowing UI,
+          and smooth navigation using HTML, CSS, and JavaScript.
+        </p>
+        <span class="project-tech">HTML • CSS • JavaScript</span>
+      </div>
+
+      <div class="project-card">
+        <h3>Calculator App</h3>
+        <p>
+          A responsive calculator that performs basic arithmetic
+          operations with a clean user interface.
+        </p>
+        <span class="project-tech">HTML • CSS • JavaScript</span>
+      </div>
+
+      <div class="project-card">
+        <h3>To-Do List App</h3>
+        <p>
+          A task management app that allows users to add, delete,
+          and manage daily tasks efficiently.
+        </p>
+        <span class="project-tech">JavaScript</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="section">
+    <h2>📞 Contact Information</h2>
+
+    <div class="info-card">
+      <p><strong>Email:</strong> kyzel@email.com</p>
+      <p><strong>GitHub:</strong> github.com/kyzelalivado64</p>
+      <p><strong>LinkedIn:</strong> linkedin.com/in/kyzel</p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 Kyzel Aleviado</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+// Smooth scroll + section fade-in
+const navLinks = document.querySelectorAll("nav a");
+const sections = document.querySelectorAll(".section");
+
+navLinks.forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const targetId = link.getAttribute("href").substring(1);
+    const targetSection = document.getElementById(targetId);
+    targetSection.scrollIntoView({ behavior: "smooth" });
+  });
+});
+
+// Section fade-in on scroll
+function revealSections() {
+  const trigger = window.innerHeight * 0.85;
+  sections.forEach(sec => {
+    const rect = sec.getBoundingClientRect();
+    if (rect.top < trigger) {
+      sec.classList.add("visible");
+    }
+  });
+}
+window.addEventListener("scroll", revealSections);
+window.addEventListener("load", () => {
+  document.getElementById("home").classList.add("visible");
+  revealSections();
+});
+  </script>
+</body>
+</html>
